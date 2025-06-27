@@ -9,14 +9,13 @@
       rel="stylesheet"
     />
     <style>
-      /* Base Styles */
       body {
         font-family: "Comic Neue", cursive;
         background: linear-gradient(135deg, #fce4ec, #f8bbd0);
         margin: 0;
         padding: 0;
         color: #333;
-        text-align: center; /* Global center alignment for header and overall page */
+        text-align: center;
       }
       header {
         background: #ff80ab;
@@ -39,7 +38,6 @@
         margin: 30px auto;
         padding: 0 20px;
       }
-      /* Section Styles */
       .section {
         background: #fff;
         border-radius: 15px;
@@ -47,7 +45,7 @@
         margin-bottom: 30px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         position: relative;
-        text-align: left; /* Paragraphs left-aligned for readability */
+        text-align: left;
       }
       .section:before {
         content: "";
@@ -72,7 +70,6 @@
         font-size: 1.1rem;
         margin: 15px 0;
       }
-      /* Photos Section */
       .photos {
         display: flex;
         flex-wrap: wrap;
@@ -91,7 +88,6 @@
         transform: scale(1.05) rotate(2deg);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       }
-      /* Responsive adjustments */
       @media (max-width: 600px) {
         .photos img {
           width: 150px;
@@ -103,6 +99,30 @@
         header h1 {
           font-size: 2rem;
         }
+      }
+
+      /* Music Button */
+      .music-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #f50057;
+        border: none;
+        border-radius: 50%;
+        padding: 15px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(245, 0, 87, 0.4);
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+      .music-btn:hover {
+        background: #ff4081;
+        box-shadow: 0 6px 14px rgba(245, 0, 87, 0.6);
+      }
+      .music-btn svg {
+        width: 28px;
+        height: 28px;
+        fill: white;
       }
     </style>
   </head>
@@ -162,5 +182,54 @@
         </div>
       </section>
     </main>
+
+    <!-- Music Control Button -->
+    <button class="music-btn" id="toggleMusicBtn" title="Play/Pause Music">
+      <svg
+        id="musicIcon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                 2 6.5 3.5 5 5.5 5c1.54 0 3.04 1 3.57 2.36h1.87
+                 C13.46 6 14.96 5 16.5 5 18.5 5 20 6.5 20 8.5
+                 c0 3.78-3.4 6.86-8.55 11.54L12 21.35zM14 8v5.5
+                 a2.5 2.5 0 1 0 1.5 2.29V8h-1.5z"
+        />
+      </svg>
+    </button>
+
+    <!-- Background Audio -->
+    <audio id="backgroundAudio" src="audio.mp3" loop></audio>
+
+    <script>
+      const audio = document.getElementById("backgroundAudio");
+      const toggleBtn = document.getElementById("toggleMusicBtn");
+      const musicIcon = document.getElementById("musicIcon");
+
+      let isPlaying = false;
+
+      toggleBtn.addEventListener("click", () => {
+        if (!isPlaying) {
+          audio.play();
+          isPlaying = true;
+          musicIcon.innerHTML =
+            '<path d="M16 13.5V8h-2v5.5a2.5 2.5 0 1 0 2 0zM12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 \
+            2 6.5 3.5 5 5.5 5c1.54 0 3.04 1 3.57 2.36h1.87 \
+            C13.46 6 14.96 5 16.5 5 18.5 5 20 6.5 20 8.5 \
+            c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>';
+        } else {
+          audio.pause();
+          isPlaying = false;
+          musicIcon.innerHTML =
+            '<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 \
+            2 6.5 3.5 5 5.5 5c1.54 0 3.04 1 3.57 2.36h1.87 \
+            C13.46 6 14.96 5 16.5 5 18.5 5 20 6.5 20 8.5 \
+            c0 3.78-3.4 6.86-8.55 11.54L12 21.35zM14 8v5.5 \
+            a2.5 2.5 0 1 0 1.5 2.29V8H14z"/>';
+        }
+      });
+    </script>
   </body>
 </html>
